@@ -7,7 +7,7 @@
 
 use async_trait::async_trait;
 use std::sync::Arc;
-use tripartite::{Agent, AgentInput, AgentOutput, ConsensusConfig, ConsensusEngine};
+use tripartite::{Agent, AgentInput, AgentOutput, ConsensusEngine};
 
 /// Simple agent that returns a fixed response with fixed confidence
 struct SimpleAgent {

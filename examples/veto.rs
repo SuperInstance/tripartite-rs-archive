@@ -20,7 +20,7 @@ impl Agent for SafetyAgent {
         let query = input.manifest.query.to_lowercase();
 
         // Check for dangerous keywords
-        let dangerous_keywords = vec!["bomb", "hack", "steal", "illegal"];
+        let dangerous_keywords = ["bomb", "hack", "steal", "illegal"];
         let is_dangerous = dangerous_keywords.iter().any(|kw| query.contains(kw));
 
         if is_dangerous {
