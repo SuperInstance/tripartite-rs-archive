@@ -42,10 +42,15 @@ jobs:
       run: cargo test --verbose
 
     - name: Run examples
+      # Names must match examples/ on disk (wave-66 fix): the previous list
+      # ran three targets that do not exist (basic_consensus, custom_agent,
+      # three_agent_council) — stale CI metadata masking real failures.
       run: |
-        cargo run --example basic_consensus
-        cargo run --example custom_agent
-        cargo run --example three_agent_council
+        cargo run --example basic
+        cargo run --example ml_ensembling
+        cargo run --example multi_round
+        cargo run --example veto
+        cargo run --example weighted_voting
       shell: bash
 
   security:
@@ -59,8 +64,9 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Check for outdated deps
-      run: cargo outdated --exit-code 1
+    # NOTE (wave-66): the cargo-outdated step was removed — the command was
+    # never installed in this job ("no such command: outdated"), and stale-dep
+    # detection is dependabot's registered job on this repo already.
 
   benchmark:
     name: Benchmark
@@ -72,10 +78,8 @@ jobs:
       uses: dtolnay/rust-toolchain@stable
 
     - name: Run benchmarks
-      run: cargo bench -- --output-format bencher | tee benchmark.txt
-
-    - name: Store benchmark result
-      uses: benchmark-action/github-action-benchmark@v1
-      with:
-        tool: 'cargo'
-        output-file-path: benchmark.txt
+      # criterion 0.8 removed the "bencher" output format that
+      # benchmark-action consumed (wave-66 fix: 'Unrecognized option:
+      # output-format'). Run the suite plainly; reintroduce github-action-
+      # benchmark only with a tool format criterion actually supports.
+      run: cargo bench

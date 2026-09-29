@@ -1,0 +1,6 @@
+# Force LF everywhere: the CI fmt gate uses newline_style="Unix" via
+# rustfmt defaults; CRLF checkouts (Windows core.autocrlf) make cargo fmt
+# --check fail with a phantom per-file diff. Pin eol at checkout instead.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
