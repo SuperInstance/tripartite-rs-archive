@@ -6,7 +6,7 @@
 // - Different threshold configurations
 
 use async_trait::async_trait;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 use tripartite::{Agent, AgentInput, AgentOutput, ConsensusConfig, ConsensusEngine};
 
